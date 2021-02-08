@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.kodrek">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/kodrek_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/kodrek_icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Kodrek">
+        <activity android:name=".SubmissionsTable"></activity>
+        <activity android:name=".FetchData" />
+        <activity android:name=".RegisterComplete" />
+        <activity android:name=".RegisterPassword" />
+        <activity android:name=".RegisterUva" />
+        <activity android:name=".RegisterUsername" />
+        <activity android:name=".RegisterCf" />
+        <activity android:name=".RegisterName" />
+        <activity android:name=".RegisterEmail" />
+        <activity android:name=".LoginPassword" />
+        <activity android:name=".LoginEmail" />
+        <activity android:name=".LoginSignupOption" />
+        <activity android:name=".LadderPreset" />
+        <activity android:name=".LadderCurrent" />
+        <activity android:name=".DashOverall" />
+        <activity android:name=".DashToday" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

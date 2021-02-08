@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Kodrek</string>
+    <string-array name="loadingMessages">
+        <item>Have a Good Day</item>
+        <item>Have You Lost Weight?</item>
+        <item>Just Count to 10</item>
+        <item>Why So Serious?</item>
+        <item>We Are Making You a Cookie</item>
+        <item>How Did You Get Here?</item>
+        <item>Dividing By Zero...</item>
+        <item>Trying to Sort in O(n)</item>
+        <item>Installing Dependencies</item>
+        <item>Updating Dependencies</item>
+        <item>Definitely Not a Virus</item>
+    </string-array>
+</resources>
