@@ -312,6 +312,7 @@
                         android:layout_height="40dp"
                         android:backgroundTint="@color/danger"
                         android:fontFamily="@font/baloo_medium"
+                        android:onClick="seeTried"
                         android:text="See All"
                         android:textColor="@color/white"
                         app:cornerRadius="18dp" />

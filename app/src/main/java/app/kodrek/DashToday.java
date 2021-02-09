@@ -79,8 +79,9 @@ public class DashToday extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void signOut(View v) {
-
+    public void seeTried(View v) {
+        Intent i = new Intent(this, SubmissionsTable.class);
+        startActivity(i);
     }
 
 //    private boolean isNetAvl(){

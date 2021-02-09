@@ -2,17 +2,18 @@ package app.kodrek;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
@@ -26,6 +27,7 @@ public class FetchData extends AppCompatActivity {
     OjData codeforce = new OjData();
     OjData uva = new OjData();
     TextView textView_loginMessage;
+    ProgressBar progressBar_fetchingBar;
 
     String activity;
 
@@ -33,8 +35,10 @@ public class FetchData extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetch_data);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        activity = getIntent().getStringExtra("activity");
+        progressBar_fetchingBar = findViewById(R.id.fetchingProgress);
+        progressBar_fetchingBar.setMax(600);
 
         textView_loginMessage = findViewById(R.id.loadingMessage);
         String[] msgs = getResources().getStringArray(R.array.loadingMessages);
@@ -51,6 +55,11 @@ public class FetchData extends AppCompatActivity {
     }
 
     private void getBack(){
+        if(getIntent().hasExtra("activity")){
+            activity = getIntent().getStringExtra("activity");
+        }else{
+            activity = "DashToday";
+        }
         try {
             Class<?> c = Class.forName(activity);
             Intent intent = new Intent(this, c);
@@ -62,7 +71,14 @@ public class FetchData extends AppCompatActivity {
             intent.putExtra("uva", json);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Intent intent = new Intent(this, DashToday.class);
+            Gson gson = new Gson();
+            String json;
+            json = gson.toJson(codeforce);
+            intent.putExtra("codeforce", json);
+            json = gson.toJson(uva);
+            intent.putExtra("uva", json);
+            startActivity(intent);
         }
 
     }
@@ -74,6 +90,7 @@ public class FetchData extends AppCompatActivity {
             public void onResponse(Call<OjData> call, Response<OjData> response) {
                 if(response.isSuccessful()){
                     codeforce = response.body();
+                    setProgressAnimate(1);
                     getCfSolved();
                 }
             }
@@ -91,6 +108,7 @@ public class FetchData extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
                 codeforce.setSolvedSet(response.body());
+                setProgressAnimate(2);
                 getCfUnsolved();
             }
 
@@ -107,6 +125,7 @@ public class FetchData extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
                 codeforce.setUnsolvedSet(response.body());
+                setProgressAnimate(3);
                 getUva();
             }
 
@@ -124,6 +143,7 @@ public class FetchData extends AppCompatActivity {
             public void onResponse(Call<OjData> call, Response<OjData> response) {
                 if(response.isSuccessful()){
                     uva = response.body();
+                    setProgressAnimate(4);
                     getUvaSolved();
                 }
             }
@@ -141,6 +161,7 @@ public class FetchData extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
                 uva.setSolvedSet(response.body());
+                setProgressAnimate(5);
                 getUvaUnsolved();
             }
 
@@ -157,6 +178,7 @@ public class FetchData extends AppCompatActivity {
             @Override
             public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
                 uva.setUnsolvedSet(response.body());
+                setProgressAnimate(6);
                 getBack();
             }
 
@@ -165,5 +187,12 @@ public class FetchData extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setProgressAnimate(int progressTo){
+        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar_fetchingBar, "progress", progressBar_fetchingBar.getProgress(), progressTo*100);
+        animation.setDuration(500);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
     }
 }
