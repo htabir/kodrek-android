@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,7 +85,7 @@ public class SubmissionsTable extends AppCompatActivity {
     private void initTable(){
         if(f!=-1){
             for(int i=f; i<(f+20); i++, c++){
-                Map.Entry<String, Integer> data= sortedSubs.entrySet().iterator().next();
+                Map.Entry<String, Integer> data= subs.entrySet().iterator().next();
                 if(timeline.equals("today")){
                     if(data.getValue() < time - (time % 86400)){
                         f = -1;
@@ -145,10 +146,10 @@ public class SubmissionsTable extends AppCompatActivity {
                 actvty.setTextSize(16);
                 tableRow.addView(actvty);
                 tableLayout_subsTable.addView(tableRow);
-                sortedSubs.remove(data.getKey());
+                subs.remove(data.getKey());
 
                 if(timeline.equals("overall")){
-                    if(sortedSubs.size()==0){
+                    if(subs.size()==0){
                         f = -1;
                         break;
                     }
@@ -161,19 +162,37 @@ public class SubmissionsTable extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void mergeData(){
-        subs = Stream.of(codeforce.getSolvedSet(), codeforce.getUnsolvedSet()).flatMap(m -> m.entrySet().stream())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        subs = Stream.of(subs, uva.getSolvedSet()).flatMap(m -> m.entrySet().stream())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        subs = Stream.of(subs, uva.getUnsolvedSet()).flatMap(m -> m.entrySet().stream())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        subs = new HashMap<>();
+        subs.putAll(codeforce.getSolvedSet());
+        subs.putAll(codeforce.getUnsolvedSet());
+        subs.putAll(uva.getSolvedSet());
+        subs.putAll(uva.getUnsolvedSet());
 
-        subs.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> sortedSubs.put(x.getKey(), x.getValue()));
+        subs = sortByValue((HashMap<String, Integer>) subs);
+    }
+
+    public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)
+    {
+        // Create a list from elements of HashMap
+        List<Map.Entry<String, Integer> > list =
+                new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2)
+            {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 
     public void loadMore(View v){
