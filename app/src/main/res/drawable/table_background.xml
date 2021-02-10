@@ -7,7 +7,8 @@
         android:color="@color/box" >
     </solid>
     <corners
-        android:radius="20dp"   >
+        android:topLeftRadius="20dp"
+        android:topRightRadius="20dp">
     </corners>
 
 </shape>

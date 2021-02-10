@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.stream.Stream;
 
 public class DashToday extends AppCompatActivity {
 
@@ -81,6 +83,9 @@ public class DashToday extends AppCompatActivity {
 
     public void seeTried(View v) {
         Intent i = new Intent(this, SubmissionsTable.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("timeline", "today");
         startActivity(i);
     }
 

@@ -73,4 +73,12 @@ public class DashOverall extends AppCompatActivity {
         Intent i = new Intent(this, FetchData.class).putExtra("activity", "app.kodrek.DashOverall");
         startActivity(i);
     }
+
+    public void seeSubs(View v){
+        Intent i = new Intent(this, SubmissionsTable.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("timeline", "overall");
+        startActivity(i);
+    }
 }
