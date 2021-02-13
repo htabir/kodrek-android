@@ -44,7 +44,6 @@ public class SubmissionsTable extends AppCompatActivity {
     long time;
     LinkedHashMap<String, Integer> sortedSubs = new LinkedHashMap<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +124,7 @@ public class SubmissionsTable extends AppCompatActivity {
                 problemId.setTextSize(16);
                 tableRow.addView(problemId);
                 TextView status = new TextView(this);
-                status.setTextColor(getResources().getColor(R.color.white));
+                status.setTextColor(getResources().getColor(R.color.success));
                 if(sts==1){
                     status.setText("AC");
                 }else{
