@@ -5,6 +5,7 @@
     android:id="@+id/header_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/base"
     tools:context=".LadderCurrent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,6 +105,7 @@
                     android:id="@+id/imageView10"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:onClick="refresh"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -146,19 +148,154 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <TextView
+            android:id="@+id/presetName"
+            android:layout_width="273dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_medium"
+            android:text="null"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/actionButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/presetName"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="18dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
+
+        <TextView
+            android:id="@+id/presetTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/baloo_regular"
+            android:text="null"
+            android:textColor="@color/fonty" />
+
+        <TextView
+            android:id="@+id/presetDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/baloo_regular"
+            android:text="null"
+            android:textColor="@color/fonty" />
+
+        <TextView
+            android:id="@+id/presetOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/baloo_regular"
+            android:text="null"
+            android:textColor="@color/fonty" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="18dp"
+        android:orientation="horizontal"
+        android:weightSum="11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/currentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/baloo_medium"
+            android:text="Current"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:cornerRadius="20dp" />
+
+        <TextView
+            android:id="@+id/currentText"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:clickable="true"
+            android:fontFamily="@font/baloo_medium"
+            android:onClick="gotoLadderCurrent"
+            android:text="Current"
+            android:textAlignment="center"
+            android:textColor="@color/fonty"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:clickable="true"
+            android:fontFamily="@font/baloo_medium"
+            android:onClick="gotoLadderPreset"
+            android:text="Preset"
+            android:textAlignment="center"
+            android:textColor="@color/fonty"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:fontFamily="@font/baloo_medium"
+            android:text="Create"
+            android:textAlignment="center"
+            android:textColor="@color/fonty"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/holder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/base"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.604"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,117 +303,7 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="18dp">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="273dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="ARABIAN JUNIOR\nTRAINING SHEET - A"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView41"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="t"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/baloo_regular"
-                    android:text="TextView"
-                    android:textColor="@color/fonty" />
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/baloo_regular"
-                    android:text="TextView"
-                    android:textColor="@color/fonty" />
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/baloo_regular"
-                    android:text="TextView"
-                    android:textColor="@color/fonty" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="18dp"
-                android:orientation="horizontal"
-                android:weightSum="11">
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Current"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:cornerRadius="20dp" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:clickable="true"
-                    android:fontFamily="@font/baloo_medium"
-                    android:onClick="gotoLadderPreset"
-                    android:text="Preset"
-                    android:textAlignment="center"
-                    android:textColor="@color/fonty"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="8dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Create"
-                    android:textAlignment="center"
-                    android:textColor="@color/fonty"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
+                android:id="@+id/overviewBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -295,12 +322,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/solvedCount"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/baloo_medium"
-                    android:text="110"
+                    android:text="000"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="40sp"
@@ -308,7 +335,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
                 <ProgressBar
-                    android:id="@+id/progressBar16"
+                    android:id="@+id/solvedProgress"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
@@ -316,23 +343,23 @@
                     android:progressBackgroundTint="@color/base"
                     android:progressDrawable="@drawable/progress_bar"
                     android:progressTint="@color/white"
-                    app:layout_constraintEnd_toEndOf="@+id/textView19"
-                    app:layout_constraintStart_toStartOf="@+id/textView19"
-                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                    app:layout_constraintEnd_toEndOf="@+id/solvedCount"
+                    app:layout_constraintStart_toStartOf="@+id/solvedCount"
+                    app:layout_constraintTop_toBottomOf="@+id/solvedCount" />
 
                 <ProgressBar
-                    android:id="@+id/overallBar"
+                    android:id="@+id/ojStats"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="115dp"
                     android:layout_height="108dp"
                     android:indeterminateOnly="false"
-                    android:progress="68"
+                    android:progress="50"
                     android:progressBackgroundTint="@color/warning"
                     android:progressDrawable="@drawable/progress_bar_circle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.717"
-                    app:layout_constraintStart_toEndOf="@+id/textView19"
+                    app:layout_constraintStart_toEndOf="@+id/solvedCount"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.275" />
 
@@ -348,20 +375,20 @@
                     app:cornerRadius="18dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/progressBar16" />
+                    app:layout_constraintTop_toBottomOf="@+id/solvedProgress" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/totalCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/baloo_bold"
                     android:text="347"
                     android:textColor="@color/white"
                     android:textSize="32sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/overallBar"
-                    app:layout_constraintEnd_toEndOf="@+id/overallBar"
-                    app:layout_constraintStart_toStartOf="@+id/overallBar"
-                    app:layout_constraintTop_toTopOf="@+id/overallBar" />
+                    app:layout_constraintBottom_toBottomOf="@+id/ojStats"
+                    app:layout_constraintEnd_toEndOf="@+id/ojStats"
+                    app:layout_constraintStart_toStartOf="@+id/ojStats"
+                    app:layout_constraintTop_toTopOf="@+id/ojStats" />
 
                 <LinearLayout
                     android:layout_width="117dp"
@@ -369,9 +396,9 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     android:weightSum="2"
-                    app:layout_constraintEnd_toEndOf="@+id/overallBar"
-                    app:layout_constraintStart_toStartOf="@+id/overallBar"
-                    app:layout_constraintTop_toBottomOf="@+id/overallBar">
+                    app:layout_constraintEnd_toEndOf="@+id/ojStats"
+                    app:layout_constraintStart_toStartOf="@+id/ojStats"
+                    app:layout_constraintTop_toBottomOf="@+id/ojStats">
 
                     <TextView
                         android:id="@+id/textView36"
@@ -396,7 +423,35 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activateHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/activateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/success"
+                    android:fontFamily="@font/baloo_medium"
+                    android:onClick="activePreset"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="40dp"
+                    android:paddingBottom="10dp"
+                    android:text="Activate"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
+                android:id="@+id/submissionBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="18dp"
@@ -417,11 +472,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:fontFamily="@font/baloo_medium"
-                        android:text="Submissions"
+                        android:text="Tried"
                         android:textColor="@color/fonty" />
 
                     <TextView
-                        android:id="@+id/textView25"
+                        android:id="@+id/countTries"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -432,7 +487,7 @@
                 </LinearLayout>
 
                 <ProgressBar
-                    android:id="@+id/progressBar3"
+                    android:id="@+id/progressTries"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -440,9 +495,7 @@
                     android:progress="85"
                     android:progressBackgroundTint="@color/danger"
                     android:progressDrawable="@drawable/progress_bar"
-                    android:progressTint="@color/warning"
-                    android:secondaryProgress="75"
-                    android:secondaryProgressTint="@color/success" />
+                    android:progressTint="@color/success" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -455,11 +508,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tableBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
                 android:background="@drawable/card_table"
                 android:orientation="vertical">
 
@@ -482,31 +537,6 @@
                         android:fontFamily="@font/baloo_medium"
                         android:text="Problem Set"
                         android:textColor="@color/fonty" />
-
-                    <TextView
-                        android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:fontFamily="@font/baloo_medium"
-                        android:text="Unsolved"
-                        android:textAlignment="center"
-                        android:textColor="@color/fonty" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.05">
-
-                        <ImageView
-                            android:id="@+id/imageView15"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/filter" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
@@ -606,21 +636,20 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginBottom="25dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/baloo_regular"
-                android:text="refreshed a minute ago"
-                android:textAlignment="center"
-                android:textColor="@color/mBlack" />
-
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/baloo_medium"
+        android:text="No Active Preset Found"
+        android:textColor="@color/fonty"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

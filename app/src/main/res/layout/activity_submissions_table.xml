@@ -257,7 +257,7 @@
                     android:fontFamily="@font/baloo_semibold"
                     android:text="No Submission"
                     android:textColor="@color/fonty"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

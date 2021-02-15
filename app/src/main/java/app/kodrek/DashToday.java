@@ -68,11 +68,15 @@ public class DashToday extends AppCompatActivity {
         Intent i = new Intent(this, DashOverall.class);
         i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
         i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
         startActivity(i);
     }
 
     public void gotoLadder(View v) {
         Intent i = new Intent(this, LadderCurrent.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
         startActivity(i);
     }
 

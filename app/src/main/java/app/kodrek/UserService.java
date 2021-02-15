@@ -31,22 +31,18 @@ public interface UserService {
     @POST("oj/cf/stats/{id}")
     Call<OjData> getCf(@Path("id") String username, @Header("Authorization") String Token);
 
-    @POST("oj/cf/solved/{id}")
-    Call<Map<String, Integer>> getCfSolved(@Path("id") String username, @Header("Authorization") String Token);
-
-    @POST("oj/cf/unsolved/{id}")
-    Call<Map<String, Integer>> getCfUnsolved(@Path("id") String username, @Header("Authorization") String Token);
-
     @POST("oj/uva/stats/{id}")
     Call<OjData> getUva(@Path("id") String username, @Header("Authorization") String Token);
 
-    @POST("oj/uva/solved/{id}")
-    Call<Map<String, Integer>> getUvaSolved(@Path("id") String username, @Header("Authorization") String Token);
+    @POST("preset/list")
+    Call<PresetList> getPresetList(@Header("Authorization") String Token);
 
-    @POST("oj/uva/unsolved/{id}")
-    Call<Map<String, Integer>> getUvaUnsolved(@Path("id") String username, @Header("Authorization") String Token);
+    @POST("preset/set/{presetId}")
+    Call<Preset> setPreset(@Path("presetId") int presetId, @Header("Authorization") String Token);
 
-    @POST("auth/refresh")
-    Call<String> refreshToken(@Header("Authorization") String Token);
+    @POST("preset/details/{presetId}")
+    Call<Preset> getPresetDetails(@Path("presetId") int presetId, @Header("Authorization") String Token);
 
+    @POST("preset/stats/{id}")
+    Call<Preset> getPresetStats(@Path("id") String username, @Header("Authorization") String Token);
 }

@@ -8,13 +8,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -24,10 +24,12 @@ import retrofit2.Response;
 public class FetchData extends AppCompatActivity {
 
     LoginResponse loginResponse;
+    Preset userPreset;
     OjData codeforce = new OjData();
     OjData uva = new OjData();
     TextView textView_loginMessage;
     ProgressBar progressBar_fetchingBar;
+    PresetList pList = new PresetList();
 
     String activity;
 
@@ -38,7 +40,7 @@ public class FetchData extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         progressBar_fetchingBar = findViewById(R.id.fetchingProgress);
-        progressBar_fetchingBar.setMax(600);
+        progressBar_fetchingBar.setMax(400);
 
         textView_loginMessage = findViewById(R.id.loadingMessage);
         String[] msgs = getResources().getStringArray(R.array.loadingMessages);
@@ -58,7 +60,7 @@ public class FetchData extends AppCompatActivity {
         if(getIntent().hasExtra("activity")){
             activity = getIntent().getStringExtra("activity");
         }else{
-            activity = "DashToday";
+            activity = "com.kodrek.DashToday";
         }
         try {
             Class<?> c = Class.forName(activity);
@@ -69,6 +71,8 @@ public class FetchData extends AppCompatActivity {
             intent.putExtra("codeforce", json);
             json = gson.toJson(uva);
             intent.putExtra("uva", json);
+            json = gson.toJson(pList);
+            intent.putExtra("presetList", json);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             Intent intent = new Intent(this, DashToday.class);
@@ -78,6 +82,8 @@ public class FetchData extends AppCompatActivity {
             intent.putExtra("codeforce", json);
             json = gson.toJson(uva);
             intent.putExtra("uva", json);
+            json = gson.toJson(pList);
+            intent.putExtra("presetList", json);
             startActivity(intent);
         }
 
@@ -91,46 +97,12 @@ public class FetchData extends AppCompatActivity {
                 if(response.isSuccessful()){
                     codeforce = response.body();
                     setProgressAnimate(1);
-                    getCfSolved();
+                    getUva();
                 }
             }
 
             @Override
             public void onFailure(Call<OjData> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void getCfSolved(){
-        Call<Map<String, Integer>> getCfSolvedSet = ApiClient.getUserService().getCfSolved(loginResponse.getUsername(), "Bearer "+loginResponse.getToken());
-        getCfSolvedSet.enqueue(new Callback<Map<String, Integer>>() {
-            @Override
-            public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
-                codeforce.setSolvedSet(response.body());
-                setProgressAnimate(2);
-                getCfUnsolved();
-            }
-
-            @Override
-            public void onFailure(Call<Map<String, Integer>> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void getCfUnsolved(){
-        Call<Map<String, Integer>> getCfUnsolvedSet = ApiClient.getUserService().getCfUnsolved(loginResponse.getUsername(), "Bearer "+loginResponse.getToken());
-        getCfUnsolvedSet.enqueue(new Callback<Map<String, Integer>>() {
-            @Override
-            public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
-                codeforce.setUnsolvedSet(response.body());
-                setProgressAnimate(3);
-                getUva();
-            }
-
-            @Override
-            public void onFailure(Call<Map<String, Integer>> call, Throwable t) {
 
             }
         });
@@ -143,8 +115,8 @@ public class FetchData extends AppCompatActivity {
             public void onResponse(Call<OjData> call, Response<OjData> response) {
                 if(response.isSuccessful()){
                     uva = response.body();
-                    setProgressAnimate(4);
-                    getUvaSolved();
+                    setProgressAnimate(2);
+                    getPresetList();
                 }
             }
 
@@ -155,38 +127,47 @@ public class FetchData extends AppCompatActivity {
         });
     }
 
-    public void getUvaSolved(){
-        Call<Map<String, Integer>> getUvaSolvedSet = ApiClient.getUserService().getUvaSolved(loginResponse.getUsername(), "Bearer "+loginResponse.getToken());
-        getUvaSolvedSet.enqueue(new Callback<Map<String, Integer>>() {
+
+    private void getPresetList(){
+        Call<PresetList> getPresets = ApiClient.getUserService().getPresetList("Bearer "+loginResponse.getToken());
+        getPresets.enqueue(new Callback<PresetList>() {
             @Override
-            public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
-                uva.setSolvedSet(response.body());
-                setProgressAnimate(5);
-                getUvaUnsolved();
+            public void onResponse(Call<PresetList> call, Response<PresetList> response) {
+                pList = response.body();
+                setProgressAnimate(3);
+                getPresetStats();
             }
 
             @Override
-            public void onFailure(Call<Map<String, Integer>> call, Throwable t) {
+            public void onFailure(Call<PresetList> call, Throwable t) {
 
             }
         });
     }
 
-    public void getUvaUnsolved(){
-        Call<Map<String, Integer>> getUvaUnsolvedSet = ApiClient.getUserService().getUvaUnsolved(loginResponse.getUsername(), "Bearer "+loginResponse.getToken());
-        getUvaUnsolvedSet.enqueue(new Callback<Map<String, Integer>>() {
+    private void getPresetStats(){
+        Call<Preset> getUserPreset = ApiClient.getUserService().getPresetStats(loginResponse.getUsername(), "Bearer "+loginResponse.getToken());
+        getUserPreset.enqueue(new Callback<Preset>() {
             @Override
-            public void onResponse(Call<Map<String, Integer>> call, Response<Map<String, Integer>> response) {
-                uva.setUnsolvedSet(response.body());
-                setProgressAnimate(6);
-                getBack();
+            public void onResponse(Call<Preset> call, Response<Preset> response) {
+                if(response.isSuccessful()){
+                    userPreset = response.body();
+                    SharedPreferences.Editor prefsEditor = getSharedPreferences("K0DR3K", MODE_PRIVATE).edit();
+                    Gson gson = new Gson();
+                    String jsonT = gson.toJson(userPreset);
+                    prefsEditor.putString("userPreset", jsonT);
+                    prefsEditor.commit();
+                }
+
             }
 
             @Override
-            public void onFailure(Call<Map<String, Integer>> call, Throwable t) {
+            public void onFailure(Call<Preset> call, Throwable t) {
 
             }
         });
+        setProgressAnimate(4);
+        getBack();
     }
 
     private void setProgressAnimate(int progressTo){
