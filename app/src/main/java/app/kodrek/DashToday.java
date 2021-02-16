@@ -1,6 +1,7 @@
 package app.kodrek;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +26,15 @@ public class DashToday extends AppCompatActivity {
     LoginResponse loginResponse;
     OjData codeforce = new OjData();
     OjData uva = new OjData();
+    Preset userPreset;
     TextView textView_totalAc;
     TextView textView_totalTr;
     TextView textView_dailyGoal;
     ProgressBar progressBar_goalBar;
+
+    ConstraintLayout constraintLayout_ladderBox;
+
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +45,9 @@ public class DashToday extends AppCompatActivity {
         textView_totalTr = findViewById(R.id.totalTr);
         textView_dailyGoal = findViewById(R.id.dailyGoal);
         progressBar_goalBar = findViewById(R.id.goalBar);
+        constraintLayout_ladderBox = findViewById(R.id.ladderBox);
 
-        SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
+        prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString("loginResponse", "");
         loginResponse = gson.fromJson(json, LoginResponse.class);
@@ -62,6 +69,34 @@ public class DashToday extends AppCompatActivity {
         progressBar_goalBar.setMax(loginResponse.getDailyGoal());
         progressBar_goalBar.setProgress(ac);
         textView_dailyGoal.setText("Today you solved "+ac+"/"+loginResponse.getDailyGoal()+" problems.");
+
+        Gson gson = new Gson();
+        String json = prefs.getString("userPreset", "");
+
+
+        if(json == ""){
+            constraintLayout_ladderBox.setVisibility(View.GONE);
+            ConstraintLayout constraintLayout_messageBox = findViewById(R.id.messageBox);
+            constraintLayout_messageBox.setVisibility(View.VISIBLE);
+        }else{
+            userPreset = gson.fromJson(json, Preset.class);
+            TextView textView_presetGoal = findViewById(R.id.presetGoal);
+            textView_presetGoal.setText(loginResponse.getPresetDailyGoal()+"");
+            ProgressBar progressBar_ladderProgress = findViewById(R.id.ladderProgress);
+            progressBar_ladderProgress.setMax(loginResponse.getPresetDailyGoal());
+//            Toast.makeText(this, userPreset.cfTotal()+"", Toast.LENGTH_LONG).show();
+            int solved = userPreset.dailySolved(codeforce, "cf") + userPreset.dailySolved(uva, "uva");
+            progressBar_ladderProgress.setProgress(solved);
+            TextView textView_ladderInfo = findViewById(R.id.ladderInfo);
+            int r = (loginResponse.getPresetDailyGoal() - solved);
+            String s;
+            if(r>0){
+                s = r + " more to complete\ntoday's goal";
+            }else{
+                s = "You have completed\ntoday's goal.";
+            }
+            textView_ladderInfo.setText("You have solved\n" + solved + " problems today.\n" + s);
+        }
     }
 
     public void gotoOverall(View v) {
@@ -80,8 +115,32 @@ public class DashToday extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void gotoPresets(View v){
+        Intent i = new Intent(this, LadderPreset.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
     public void refresh(View v) {
         Intent i = new Intent(this, FetchData.class).putExtra("activity", "app.kodrek.DashToday");
+        startActivity(i);
+    }
+
+    public void gotoMenu(View v){
+        Intent i = new Intent(this, Menu.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void comingSoon(View v){
+        Intent i = new Intent(this, ComingSoon.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
         startActivity(i);
     }
 
@@ -100,7 +159,7 @@ public class DashToday extends AppCompatActivity {
 //    }
 
 
-//    public void onBackPressed(){
-//        Toast.makeText(this, "Will be back!", Toast.LENGTH_LONG).show();
-//    }
+    public void onBackPressed(){
+
+    }
 }

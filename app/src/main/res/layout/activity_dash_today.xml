@@ -122,6 +122,7 @@
                     android:id="@+id/imageView8"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="comingSoon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +139,7 @@
                     android:id="@+id/imageView9"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="gotoMenu"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -236,6 +238,7 @@
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -362,8 +365,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="18dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
                 android:background="@drawable/card"
                 android:orientation="horizontal">
 
@@ -382,12 +385,12 @@
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
+                android:id="@+id/ladderBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"
                 android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
                 android:background="@drawable/card">
 
                 <TextView
@@ -401,7 +404,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/ladderInfo"
                     android:layout_width="196dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -412,7 +415,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
                 <ProgressBar
-                    android:id="@+id/overallBar"
+                    android:id="@+id/ladderProgress"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="115dp"
                     android:layout_height="108dp"
@@ -423,22 +426,22 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView19"
+                    app:layout_constraintStart_toEndOf="@+id/ladderInfo"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.492" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/presetGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/baloo_bold"
                     android:text="10"
                     android:textColor="@color/white"
                     android:textSize="40sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/overallBar"
-                    app:layout_constraintEnd_toEndOf="@+id/overallBar"
-                    app:layout_constraintStart_toStartOf="@+id/overallBar"
-                    app:layout_constraintTop_toTopOf="@+id/overallBar" />
+                    app:layout_constraintBottom_toBottomOf="@+id/ladderProgress"
+                    app:layout_constraintEnd_toEndOf="@+id/ladderProgress"
+                    app:layout_constraintStart_toStartOf="@+id/ladderProgress"
+                    app:layout_constraintTop_toTopOf="@+id/ladderProgress" />
 
                 <Button
                     android:id="@+id/button3"
@@ -450,22 +453,58 @@
                     app:cornerRadius="18dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                    app:layout_constraintTop_toBottomOf="@+id/ladderInfo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textView21"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/messageBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="18dp"
-                android:layout_marginTop="18dp"
                 android:layout_marginRight="18dp"
-                android:layout_marginBottom="25dp"
-                android:fontFamily="@font/baloo_regular"
-                android:text="refreshed a minute ago"
-                android:textAlignment="center"
-                android:textColor="@color/mBlack" />
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/card"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/baloo_medium"
+                    android:text="No Active Preset Found"
+                    android:textColor="@color/fonty"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bold"
+                    android:text="ACTIVATE A PRESET NOW"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <Button
+                    android:id="@+id/button8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="18dp"
+                    android:onClick="gotoPresets"
+                    android:text="Presets"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

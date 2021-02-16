@@ -1,5 +1,6 @@
 package app.kodrek;
 
+import java.util.Map;
 
 public class Preset extends ProblemSet{
 
@@ -26,5 +27,69 @@ public class Preset extends ProblemSet{
 
     public int getTotal(){
         return super.cfTotal()+super.uvaTotal();
+    }
+
+    @Override
+    public int countSolved(OjData ojData, String ojName) {
+        int c = 0;
+        if(ojName=="cf"){
+            Map<String, Integer> cfSolved = ojData.getSolvedSet();
+            for(String prob : super.cf){
+                if(cfSolved.get(prob) != null){
+                    c++;
+                }
+            }
+        }else if(ojName == "uva"){
+            Map<String, Integer> cfSolved = ojData.getSolvedSet();
+            for(String prob : super.uva){
+                if(cfSolved.get(prob) != null){
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+
+    @Override
+    public int countUnsolved(OjData ojData, String ojName) {
+        int c = 0;
+        if(ojName=="cf"){
+            Map<String, Integer> set = ojData.getUnsolvedSet();
+            for(String prob : super.cf){
+                if(set.get(prob) != null){
+                    c++;
+                }
+            }
+        }else if(ojName == "uva"){
+            Map<String, Integer> set = ojData.getUnsolvedSet();
+            for(String prob : super.uva){
+                if(set.get(prob) != null){
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+
+    public int dailySolved(OjData ojData, String ojName){
+        int c = 0;
+        int time = (int) (System.currentTimeMillis()/1000L);
+        time = time - (time%86400);
+        if(ojName=="cf"){
+            Map<String, Integer> set = ojData.getSolvedSet();
+            for(String prob : super.cf){
+                if(set.get(prob) != null && set.get(prob) >= time){
+                    c++;
+                }
+            }
+        }else if(ojName == "uva"){
+            Map<String, Integer> set = ojData.getSolvedSet();
+            for(String prob : super.uva){
+                if(set.get(prob) != null && set.get(prob) >= time){
+                    c++;
+                }
+            }
+        }
+        return c;
     }
 }

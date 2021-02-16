@@ -3,7 +3,7 @@ package app.kodrek;
 import java.util.List;
 import java.util.Map;
 
-public class ProblemSet {
+public abstract class ProblemSet {
     String name;
     String owner;
     List<String> cf;
@@ -49,44 +49,8 @@ public class ProblemSet {
         return uva.size();
     }
 
-    public int countSolved(OjData ojData, String ojName){
-        int c = 0;
-        if(ojName=="cf"){
-            Map<String, Integer> cfSolved = ojData.getSolvedSet();
-            for(String prob : cf){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }else if(ojName == "uva"){
-            Map<String, Integer> cfSolved = ojData.getSolvedSet();
-            for(String prob : uva){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }
-        return c;
-    }
+    public abstract int countSolved(OjData ojData, String ojName);
 
-    public int countUnsolved(OjData ojData, String ojName){
-        int c = 0;
-        if(ojName=="cf"){
-            Map<String, Integer> cfSolved = ojData.getUnsolvedSet();
-            for(String prob : cf){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }else if(ojName == "uva"){
-            Map<String, Integer> cfSolved = ojData.getUnsolvedSet();
-            for(String prob : uva){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }
-        return c;
-    }
+    public abstract int countUnsolved(OjData ojData, String ojName);
 
 }

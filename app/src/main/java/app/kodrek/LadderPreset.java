@@ -31,7 +31,7 @@ public class LadderPreset extends AppCompatActivity {
         Gson gson = new Gson();
         String json = getIntent().getStringExtra("presetList");
         presetList = gson.fromJson(json, PresetList.class);
-        jsonT = json = prefs.getString("userPreset", "");
+        jsonT = prefs.getString("userPreset", "");
         userPreset = gson.fromJson(jsonT, Preset.class);
 
         makeList();
@@ -40,7 +40,7 @@ public class LadderPreset extends AppCompatActivity {
 
     private void makeList(){
 
-        if(jsonT != null){
+        if(jsonT != ""){
             LayoutInflater inflater = getLayoutInflater();
             View view = inflater.inflate(R.layout.preset_active, presetHolder, false);
             view.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +68,7 @@ public class LadderPreset extends AppCompatActivity {
         }
 
         for(int id: presetList.getId()){
-            if(jsonT!=null && id==userPreset.getPresetId()){
+            if(jsonT!="" && id==userPreset.getPresetId()){
                 continue;
             }
             LayoutInflater inflater = getLayoutInflater();
@@ -112,6 +112,22 @@ public class LadderPreset extends AppCompatActivity {
 
     public void gotoLadderCurrent(View v){
         Intent i = new Intent(this, LadderCurrent.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void gotoMenu(View v){
+        Intent i = new Intent(this, Menu.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void comingSoon(View v){
+        Intent i = new Intent(this, ComingSoon.class);
         i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
         i.putExtra("uva", getIntent().getStringExtra("uva"));
         i.putExtra("presetList", getIntent().getStringExtra("presetList"));

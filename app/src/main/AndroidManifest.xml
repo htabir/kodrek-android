@@ -12,16 +12,18 @@
         android:roundIcon="@mipmap/kodrek_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kodrek">
-        <activity android:name=".SubmissionsTable"></activity>
-        <activity android:name=".FetchData" />
+        <activity android:name=".ComingSoon"></activity>
+        <activity android:name=".Menu" />
+        <activity android:name=".SubmissionsTable" />
+        <activity android:name=".FetchData" android:noHistory="true"/>
         <activity android:name=".RegisterComplete" />
-        <activity android:name=".RegisterPassword" />
+        <activity android:name=".RegisterPassword" android:noHistory="true"/>
         <activity android:name=".RegisterUva" />
         <activity android:name=".RegisterUsername" />
         <activity android:name=".RegisterCf" />
         <activity android:name=".RegisterName" />
         <activity android:name=".RegisterEmail" />
-        <activity android:name=".LoginPassword" />
+        <activity android:name=".LoginPassword" android:noHistory="true"/>
         <activity android:name=".LoginEmail" />
         <activity android:name=".LoginSignupOption" />
         <activity android:name=".LadderPreset" />

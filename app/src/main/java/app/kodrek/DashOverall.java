@@ -1,6 +1,7 @@
 package app.kodrek;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,11 +17,16 @@ public class DashOverall extends AppCompatActivity {
     LoginResponse loginResponse;
     OjData codeforce = new OjData();
     OjData uva = new OjData();
+    Preset userPreset;
 
     TextView textView_totalSub;
     TextView textView_totalAc;
     TextView textView_username;
     ProgressBar progressBar_totalBar;
+
+    ConstraintLayout constraintLayout_ladderBox;
+
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,9 @@ public class DashOverall extends AppCompatActivity {
         textView_totalAc = findViewById(R.id.totalAc);
         textView_username = findViewById(R.id.username);
         progressBar_totalBar = findViewById(R.id.totalBar);
+        constraintLayout_ladderBox = findViewById(R.id.ladderBox);
 
-        SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
+        prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString("loginResponse", "");
         loginResponse = gson.fromJson(json, LoginResponse.class);
@@ -55,6 +62,26 @@ public class DashOverall extends AppCompatActivity {
         progressBar_totalBar.setMax((codeforce.getTotalSub()+uva.getTotalSub()));
         progressBar_totalBar.setProgress(ac+ot);
         progressBar_totalBar.setSecondaryProgress(ac);
+
+        Gson gson = new Gson();
+        String json = prefs.getString("userPreset", "");
+
+        if(json==""){
+            constraintLayout_ladderBox.setVisibility(View.GONE);
+            ConstraintLayout constraintLayout_messageBox = findViewById(R.id.messageBox);
+            constraintLayout_messageBox.setVisibility(View.VISIBLE);
+        }else{
+            userPreset = gson.fromJson(json, Preset.class);
+            TextView textView_ladderTotal = findViewById(R.id.ladderTotal);
+            textView_ladderTotal.setText(userPreset.getTotal()+"");
+            ProgressBar progressBar_ladderProgress = findViewById(R.id.ladderProgress);
+            progressBar_ladderProgress.setMax(userPreset.getTotal());
+            int solved = userPreset.countSolved(codeforce, "cf") + userPreset.countSolved(uva, "uva");
+            int unsolved = userPreset.countUnsolved(codeforce, "cf") + userPreset.countUnsolved(uva, "uva");
+            progressBar_ladderProgress.setProgress(solved);
+            TextView textView_ladderInfo = findViewById(R.id.ladderInfo);
+            textView_ladderInfo.setText("You have solved " + solved + ",\n tried " + (solved+unsolved) + " problem(s).\n " + (userPreset.getTotal() - solved) + " more to finish this ladder.");
+        }
     }
 
     public void gotoToday(View v){
@@ -67,6 +94,30 @@ public class DashOverall extends AppCompatActivity {
 
     public void gotoLadder(View v){
         Intent i = new Intent(this, LadderCurrent.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void gotoPresets(View v){
+        Intent i = new Intent(this, LadderPreset.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void gotoMenu(View v){
+        Intent i = new Intent(this, Menu.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void comingSoon(View v){
+        Intent i = new Intent(this, ComingSoon.class);
         i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
         i.putExtra("uva", getIntent().getStringExtra("uva"));
         i.putExtra("presetList", getIntent().getStringExtra("presetList"));

@@ -1,0 +1,501 @@
+@startuml
+
+title __KODREK's Class Diagram__\n
+
+  namespace app.kodrek {
+    class app.kodrek.ApiClient {
+        {static} + getUserService()
+        {static} - getRetrofit()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.CheckingResponse {
+        - status : String
+        + getStatus()
+        + setStatus()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.DashOverall {
+        ~ constraintLayout_ladderBox : ConstraintLayout
+        ~ prefs : SharedPreferences
+        ~ progressBar_totalBar : ProgressBar
+        ~ textView_totalAc : TextView
+        ~ textView_totalSub : TextView
+        ~ textView_username : TextView
+        + gotoLadder()
+        + gotoPresets()
+        + gotoToday()
+        + refresh()
+        + seeSubs()
+        # onCreate()
+        - update()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.DashToday {
+        ~ progressBar_goalBar : ProgressBar
+        ~ textView_dailyGoal : TextView
+        ~ textView_totalAc : TextView
+        ~ textView_totalTr : TextView
+        ~ textView_username : TextView
+        + gotoLadder()
+        + gotoOverall()
+        + refresh()
+        + seeTried()
+        # onCreate()
+        - update()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.FetchData {
+        ~ activity : String
+        ~ progressBar_fetchingBar : ProgressBar
+        ~ textView_loginMessage : TextView
+        # onCreate()
+        - getBack()
+        - getCf()
+        - getPresetList()
+        - getPresetStats()
+        - getUva()
+        - setProgressAnimate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LadderCurrent {
+        ~ holder : ScrollView
+        ~ imageView_actionBtn : ImageView
+        ~ presetId : int
+        ~ progressBar_ojStats : ProgressBar
+        ~ progressBar_solvedProgress : ProgressBar
+        ~ textView_message : TextView
+        ~ textView_presetDays : TextView
+        ~ textView_presetName : TextView
+        ~ textView_presetOwner : TextView
+        ~ textView_presetTotal : TextView
+        ~ textView_solvedCount : TextView
+        ~ textView_totalCount : TextView
+        + activePreset()
+        + gotoDash()
+        + gotoLadderCurrent()
+        + gotoLadderPreset()
+        + refresh()
+        # onCreate()
+        - updateById()
+        - updateByPrefs()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LadderPreset {
+        ~ jsonT : String
+        ~ presetBox : LinearLayout
+        ~ presetHolder : LinearLayout
+        + gotoDash()
+        + gotoLadderCurrent()
+        + presetDetails()
+        # onCreate()
+        - makeList()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginEmail {
+        ~ editText_email : EditText
+        ~ email : String
+        ~ textView_emailLabel : TextView
+        + backToOptions()
+        + goForPassword()
+        # onCreate()
+        - validateEmail()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginPassword {
+        ~ button_login : Button
+        ~ editText_password : EditText
+        ~ email : String
+        ~ hidden : Boolean
+        ~ textView_passwordLabel : TextView
+        + backToEmail()
+        + changeInputType()
+        + gotoToday()
+        + login()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginRequest {
+        - email : String
+        - password : String
+        + LoginRequest()
+        + LoginRequest()
+        + getEmail()
+        + getPassword()
+        + setEmail()
+        + setPassword()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginResponse {
+        - dailyGoal : int
+        - name : String
+        - presetDailyGoal : int
+        - token : String
+        - username : String
+        + getDailyGoal()
+        + getName()
+        + getPresetDailyGoal()
+        + getToken()
+        + getUsername()
+        + setDailyGoal()
+        + setName()
+        + setPresetDailyGoal()
+        + setToken()
+        + setUsername()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginSignupOption {
+        + gotoLogin()
+        + test()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.MainActivity {
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.OjData {
+        - disAc : int
+        - solvedSet : Map<String, Integer>
+        - totalAc : int
+        - totalOt : int
+        - totalSub : int
+        - totalWa : int
+        - unsolvedSet : Map<String, Integer>
+        + getDayWiseAc()
+        + getDayWiseUn()
+        + getDisAc()
+        + getSolvedSet()
+        + getTotalAc()
+        + getTotalOt()
+        + getTotalSub()
+        + getTotalWa()
+        + getUnsolvedSet()
+        + setDisAc()
+        + setSolvedSet()
+        + setTotalAc()
+        + setTotalOt()
+        + setTotalSub()
+        + setTotalWa()
+        + setUnsolvedSet()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.Preset {
+        ~ checkpoint : int
+        ~ days : int
+        ~ like : int
+        ~ presetId : int
+        + countSolved()
+        + countUnsolved()
+        + getCheckpoint()
+        + getDays()
+        + getLike()
+        + getPresetId()
+        + getTotal()
+        + setCheckpoint()
+        + setDays()
+        + setLike()
+        + setPresetId()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.PresetList {
+        ~ days : List<Integer>
+        ~ id : List<Integer>
+        ~ like : List<Integer>
+        ~ name : List<String>
+        ~ total : List<Integer>
+        ~ touch : List<Integer>
+        + getDays()
+        + getId()
+        + getLike()
+        + getName()
+        + getPresetDays()
+        + getPresetLike()
+        + getPresetName()
+        + getPresetTotal()
+        + getPresetTouch()
+        + getTotal()
+        + getTouch()
+        + setDays()
+        + setId()
+        + setLike()
+        + setName()
+        + setTotal()
+        + setTouch()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    abstract class app.kodrek.ProblemSet {
+        ~ cf : List<String>
+        ~ name : String
+        ~ owner : String
+        ~ uva : List<String>
+        + cfTotal()
+        {abstract} + countSolved()
+        {abstract} + countUnsolved()
+        + getCf()
+        + getName()
+        + getOwner()
+        + getUva()
+        + setCf()
+        + setName()
+        + setOwner()
+        + setUva()
+        + uvaTotal()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterCf {
+        ~ button_kontinue : Button
+        ~ editText_codeforces : EditText
+        ~ textView_cfLabel : TextView
+        + backToUsername()
+        + goForUva()
+        # onCreate()
+        - checkCodeForces()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterComplete {
+        ~ button_goButton : Button
+        ~ imageView_icon : ImageView
+        ~ textView_message : TextView
+        ~ textView_messageSmall : TextView
+        + gotoLogin()
+        + onBackPressed()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterEmail {
+        ~ button_kontinue : Button
+        ~ editText_email : EditText
+        ~ name : String
+        ~ textView_emailLabel : TextView
+        + backToName()
+        + goForUsername()
+        # onCreate()
+        - checkEmail()
+        - validateEmail()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterName {
+        ~ editText_name : EditText
+        ~ textView_nameLabel : TextView
+        + backToOptions()
+        + goForEmail()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterPassword {
+        ~ button_register : Button
+        ~ editText_confirmPassword : EditText
+        ~ editText_password : EditText
+        ~ textView_confirmPasswordLabel : TextView
+        ~ textView_passwordLabel : TextView
+        + backToUva()
+        + registerUser()
+        # onCreate()
+        - register()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterUsername {
+        ~ button_kontinue : Button
+        ~ editText_username : EditText
+        ~ textView_usernameLabel : TextView
+        + backToEmail()
+        + goForCf()
+        # onCreate()
+        - checkUsername()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterUva {
+        ~ button_kontinue : Button
+        ~ editText_uva : EditText
+        ~ textView_uvaLabel : TextView
+        + backToCf()
+        + goForPassword()
+        # onCreate()
+        - checkUva()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegistrationRequest {
+        - codeforces : String
+        - email : String
+        - name : String
+        - password : String
+        - username : String
+        - uva : String
+        + getCodeForces()
+        + getEmail()
+        + getName()
+        + getPassword()
+        + getUsername()
+        + getUva()
+        + setCodeForces()
+        + setEmail()
+        + setName()
+        + setPassword()
+        + setUsername()
+        + setUva()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.SubmissionsTable {
+        ~ button_load : Button
+        ~ c : int
+        ~ constraintLayout_empty : ConstraintLayout
+        ~ f : int
+        ~ sortedSubs : LinkedHashMap<String, Integer>
+        ~ subs : Map<String, Integer>
+        ~ tableLayout_subsTable : TableLayout
+        ~ textView_header : TextView
+        ~ textView_timeline : TextView
+        ~ time : long
+        ~ timeline : String
+        + loadMore()
+        {static} + sortByValue()
+        # onCreate()
+        - initTable()
+        - mergeData()
+        - update()
+    }
+  }
+  
+
+  namespace app.kodrek {
+    interface app.kodrek.UserService {
+        {abstract} + checkCf()
+        {abstract} + checkEmail()
+        {abstract} + checkUsername()
+        {abstract} + checkUva()
+        {abstract} + getCf()
+        {abstract} + getPresetDetails()
+        {abstract} + getPresetList()
+        {abstract} + getPresetStats()
+        {abstract} + getUva()
+        {abstract} + setPreset()
+        {abstract} + userLogin()
+        {abstract} + userRegister()
+    }
+  }
+  
+
+  app.kodrek.DashOverall -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.DashOverall o-- app.kodrek.OjData : codeforce
+  app.kodrek.DashOverall o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.DashOverall o-- app.kodrek.Preset : userPreset
+  app.kodrek.DashOverall o-- app.kodrek.OjData : uva
+  app.kodrek.DashToday -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.DashToday o-- app.kodrek.OjData : codeforce
+  app.kodrek.DashToday o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.DashToday o-- app.kodrek.OjData : uva
+  app.kodrek.FetchData -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.FetchData o-- app.kodrek.OjData : codeforce
+  app.kodrek.FetchData o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.FetchData o-- app.kodrek.PresetList : pList
+  app.kodrek.FetchData o-- app.kodrek.Preset : userPreset
+  app.kodrek.FetchData o-- app.kodrek.OjData : uva
+  app.kodrek.LadderCurrent -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LadderCurrent o-- app.kodrek.OjData : codeforce
+  app.kodrek.LadderCurrent o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.LadderCurrent o-- app.kodrek.PresetList : presetList
+  app.kodrek.LadderCurrent o-- app.kodrek.Preset : userPreset
+  app.kodrek.LadderCurrent o-- app.kodrek.OjData : uva
+  app.kodrek.LadderPreset -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LadderPreset o-- app.kodrek.PresetList : presetList
+  app.kodrek.LadderPreset o-- app.kodrek.Preset : userPreset
+  app.kodrek.LoginEmail -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LoginPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LoginSignupOption -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.Preset -up-|> app.kodrek.ProblemSet
+  app.kodrek.RegisterCf -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterComplete -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterEmail -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterName -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterUsername -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterUva -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.SubmissionsTable -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.SubmissionsTable o-- app.kodrek.OjData : codeforce
+  app.kodrek.SubmissionsTable o-- app.kodrek.OjData : uva
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

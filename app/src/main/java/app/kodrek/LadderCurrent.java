@@ -87,7 +87,7 @@ public class LadderCurrent extends AppCompatActivity {
             updateById();
         }else{
             json = prefs.getString("userPreset", "");
-            if(json == null){
+            if(json == ""){
 
             }else{
                 userPreset = gson.fromJson(json, Preset.class);
@@ -198,6 +198,22 @@ public class LadderCurrent extends AppCompatActivity {
 
     public void gotoLadderCurrent(View v){
         Intent i = new Intent(this, LadderCurrent.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void gotoMenu(View v){
+        Intent i = new Intent(this, Menu.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void comingSoon(View v){
+        Intent i = new Intent(this, ComingSoon.class);
         i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
         i.putExtra("uva", getIntent().getStringExtra("uva"));
         i.putExtra("presetList", getIntent().getStringExtra("presetList"));

@@ -1,0 +1,221 @@
+@startuml
+
+title __KODREK.APP's Class Diagram__\n
+
+  namespace app.kodrek {
+    class app.kodrek.ApiClient {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.BuildConfig {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.CheckingResponse {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.DashOverall {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.DashToday {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.FetchData {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LadderCurrent {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LadderPreset {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginEmail {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginPassword {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginRequest {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginResponse {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.LoginSignupOption {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.MainActivity {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.OjData {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.Preset {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.PresetList {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    abstract class app.kodrek.ProblemSet {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterCf {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterComplete {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterEmail {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterName {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterPassword {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterUsername {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegisterUva {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.RegistrationRequest {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    class app.kodrek.SubmissionsTable {
+    }
+  }
+  
+
+  namespace app.kodrek {
+    interface app.kodrek.UserService {
+    }
+  }
+  
+
+  app.kodrek.DashOverall -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.DashOverall o-- app.kodrek.OjData : codeforce
+  app.kodrek.DashOverall o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.DashOverall o-- app.kodrek.Preset : userPreset
+  app.kodrek.DashOverall o-- app.kodrek.OjData : uva
+  app.kodrek.DashToday -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.DashToday o-- app.kodrek.OjData : codeforce
+  app.kodrek.DashToday o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.DashToday o-- app.kodrek.OjData : uva
+  app.kodrek.FetchData -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.FetchData o-- app.kodrek.OjData : codeforce
+  app.kodrek.FetchData o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.FetchData o-- app.kodrek.PresetList : pList
+  app.kodrek.FetchData o-- app.kodrek.Preset : userPreset
+  app.kodrek.FetchData o-- app.kodrek.OjData : uva
+  app.kodrek.LadderCurrent -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LadderCurrent o-- app.kodrek.OjData : codeforce
+  app.kodrek.LadderCurrent o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.LadderCurrent o-- app.kodrek.PresetList : presetList
+  app.kodrek.LadderCurrent o-- app.kodrek.Preset : userPreset
+  app.kodrek.LadderCurrent o-- app.kodrek.OjData : uva
+  app.kodrek.LadderPreset -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LadderPreset o-- app.kodrek.PresetList : presetList
+  app.kodrek.LadderPreset o-- app.kodrek.Preset : userPreset
+  app.kodrek.LoginEmail -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LoginPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.LoginSignupOption -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.Preset -up-|> app.kodrek.ProblemSet
+  app.kodrek.RegisterCf -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterComplete -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterEmail -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterName -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterUsername -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.RegisterUva -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.SubmissionsTable -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.SubmissionsTable o-- app.kodrek.OjData : codeforce
+  app.kodrek.SubmissionsTable o-- app.kodrek.OjData : uva
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
