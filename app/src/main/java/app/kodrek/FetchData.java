@@ -166,12 +166,12 @@ public class FetchData extends AppCompatActivity {
                     String jsonT = gson.toJson(userPreset);
                     prefsEditor.putString("userPreset", jsonT);
                     prefsEditor.commit();
-                    setProgressAnimate(4);
-                    getBack();
-                }else{
-                    logout();
-                }
 
+                }else{
+
+                }
+                setProgressAnimate(4);
+                getBack();
             }
 
             @Override

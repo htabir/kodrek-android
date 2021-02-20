@@ -50,7 +50,7 @@ public class GoalSetter extends AppCompatActivity {
         }else{
             editText_goal.setHint(loginResponse.getPresetDailyGoal()+"");
         }
-        editText_goal.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        editText_goal.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     public void gotoToday(View v) {
