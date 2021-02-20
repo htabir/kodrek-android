@@ -15,6 +15,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class LoginPassword extends AppCompatActivity {
     Button button_login;
     String email;
     Boolean hidden;
+    ImageView imageView_eye;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class LoginPassword extends AppCompatActivity {
         editText_password = findViewById(R.id.password);
         textView_passwordLabel = findViewById(R.id.passwordLabel);
         button_login = findViewById(R.id.loginButton);
+        imageView_eye = findViewById(R.id.eye);
         hidden = true;
     }
 
@@ -94,9 +97,11 @@ public class LoginPassword extends AppCompatActivity {
     public void changeInputType(View v){
         if(hidden){
             editText_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            imageView_eye.setImageResource(R.drawable.eye);
             hidden=false;
         }else{
             editText_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            imageView_eye.setImageResource(R.drawable.eyev);
             hidden=true;
         }
     }

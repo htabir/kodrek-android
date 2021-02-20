@@ -82,6 +82,7 @@ public class DashOverall extends AppCompatActivity {
             TextView textView_ladderInfo = findViewById(R.id.ladderInfo);
             textView_ladderInfo.setText("You have solved " + solved + ",\n tried " + (solved+unsolved) + " problem(s).\n " + (userPreset.getTotal() - solved) + " more to finish this ladder.");
         }
+        setHistory();
     }
 
     public void gotoToday(View v){
@@ -135,5 +136,25 @@ public class DashOverall extends AppCompatActivity {
         i.putExtra("uva", getIntent().getStringExtra("uva"));
         i.putExtra("timeline", "overall");
         startActivity(i);
+    }
+
+    private void setHistory(){
+        int[] textId = new int[] {R.id.textHistory0, R.id.textHistory1, R.id.textHistory2, R.id.textHistory3, R.id.textHistory4, R.id.textHistory5, R.id.textHistory6};
+        int[] barId = new int[] {R.id.barHistory0, R.id.barHistory1, R.id.barHistory2, R.id.barHistory3, R.id.barHistory4, R.id.barHistory5, R.id.barHistory6};
+        int mx=0;
+        for(int i=0; i<7; i++){
+            TextView textView = findViewById(textId[i]);
+            int val = codeforce.getDayWiseAc(i) + uva.getDayWiseAc(i);
+            textView.setText(val+"");
+            ProgressBar progressBar = findViewById(barId[i]);
+            progressBar.setProgress(val);
+            if(val>mx){
+                mx = val;
+            }
+        }
+        for(int i=0; i<7; i++){
+            ProgressBar progressBar = findViewById(barId[i]);
+            progressBar.setMax(mx);
+        }
     }
 }

@@ -5,28 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base"
-    tools:context=".Menu">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/box"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".GoalSetter">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -96,13 +75,13 @@
                     android:id="@+id/imageView10"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:onClick="power"
+                    android:onClick="refresh"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.50"
-                    app:srcCompat="@drawable/power" />
+                    app:srcCompat="@drawable/reload" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -114,7 +93,6 @@
                     android:id="@+id/imageView8"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
-                    android:onClick="comingSoon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,93 +109,78 @@
                     android:id="@+id/imageView9"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="gotoMenu"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/app" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="51dp"
-                    android:layout_height="11dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/active" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="40dp"
+        android:onClick="gotoMenu"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <TextView
+        android:id="@+id/goalLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="18dp"
+        android:fontFamily="@font/baloo_medium"
+        android:text="Set Your Preset Goal"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="18dp"
-                android:paddingLeft="40dp"
-                android:text="Change Password"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:visibility="gone" />
+    <EditText
+        android:id="@+id/goal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="18dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/baloo_medium"
+        android:hint="Your Goal"
+        android:inputType="numberPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/fonty"
+        android:textCursorDrawable="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goalLabel" />
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginRight="18dp"
-                android:onClick="changeDailyGoal"
-                android:paddingLeft="40dp"
-                android:text="Change Goal"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="18dp"
-                android:onClick="changePresetGoal"
-                android:paddingLeft="40dp"
-                android:text="Change Preset Goal"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="18dp"
-                android:onClick="logOut"
-                android:paddingLeft="40dp"
-                android:text="Log Out"
-                android:textColor="@color/white"
-                android:textSize="22sp" />
-
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/kontinue"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/baloo_bold"
+        android:onClick="setGoal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="Set"
+        android:textColor="@color/white"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -98,6 +98,8 @@ public class FetchData extends AppCompatActivity {
                     codeforce = response.body();
                     setProgressAnimate(1);
                     getUva();
+                }else{
+                    logout();
                 }
             }
 
@@ -117,6 +119,8 @@ public class FetchData extends AppCompatActivity {
                     uva = response.body();
                     setProgressAnimate(2);
                     getPresetList();
+                }else{
+                    logout();
                 }
             }
 
@@ -133,9 +137,14 @@ public class FetchData extends AppCompatActivity {
         getPresets.enqueue(new Callback<PresetList>() {
             @Override
             public void onResponse(Call<PresetList> call, Response<PresetList> response) {
-                pList = response.body();
-                setProgressAnimate(3);
-                getPresetStats();
+                if(response.isSuccessful()){
+                    pList = response.body();
+                    setProgressAnimate(3);
+                    getPresetStats();
+                }else{
+                    logout();
+                }
+
             }
 
             @Override
@@ -157,6 +166,10 @@ public class FetchData extends AppCompatActivity {
                     String jsonT = gson.toJson(userPreset);
                     prefsEditor.putString("userPreset", jsonT);
                     prefsEditor.commit();
+                    setProgressAnimate(4);
+                    getBack();
+                }else{
+                    logout();
                 }
 
             }
@@ -166,8 +179,6 @@ public class FetchData extends AppCompatActivity {
 
             }
         });
-        setProgressAnimate(4);
-        getBack();
     }
 
     private void setProgressAnimate(int progressTo){
@@ -175,5 +186,19 @@ public class FetchData extends AppCompatActivity {
         animation.setDuration(500);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
+    }
+
+    private void logout(){
+        SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
+        prefs.edit().remove("loginResponse").commit();
+        prefs.edit().remove("userPreset").commit();
+        Intent i = new Intent(this, LoginSignupOption.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        
     }
 }

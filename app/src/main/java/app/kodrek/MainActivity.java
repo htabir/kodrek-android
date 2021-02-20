@@ -1,11 +1,14 @@
 package app.kodrek;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
         String json = prefs.getString("loginResponse", "");
+
+//        if(!internetIsConnected()){
+//            Toast.makeText(this, "NO INTERNET", Toast.LENGTH_LONG).show();
+//        }
 
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
@@ -32,4 +39,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+//    public boolean internetIsConnected() {
+//        try {
+//            String command = "ping -c 1 google.com";
+//            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
 }

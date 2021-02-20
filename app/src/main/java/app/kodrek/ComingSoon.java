@@ -50,4 +50,5 @@ public class ComingSoon extends AppCompatActivity {
         Intent i = new Intent(this, FetchData.class).putExtra("activity", "app.kodrek.DashToday");
         startActivity(i);
     }
+
 }

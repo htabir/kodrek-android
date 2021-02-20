@@ -1,5 +1,6 @@
 package app.kodrek;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Preset extends ProblemSet{
@@ -31,44 +32,52 @@ public class Preset extends ProblemSet{
 
     @Override
     public int countSolved(OjData ojData, String ojName) {
-        int c = 0;
-        if(ojName=="cf"){
-            Map<String, Integer> cfSolved = ojData.getSolvedSet();
-            for(String prob : super.cf){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }else if(ojName == "uva"){
-            Map<String, Integer> cfSolved = ojData.getSolvedSet();
-            for(String prob : super.uva){
-                if(cfSolved.get(prob) != null){
-                    c++;
-                }
-            }
-        }
-        return c;
+        return getSolved(ojData, ojName).size();
     }
 
     @Override
     public int countUnsolved(OjData ojData, String ojName) {
-        int c = 0;
+        return getUnsolved(ojData, ojName).size();
+    }
+
+    public Map<String, Integer> getSolved(OjData ojData, String ojName){
+        Map<String, Integer> set= new HashMap<>();
         if(ojName=="cf"){
-            Map<String, Integer> set = ojData.getUnsolvedSet();
+            Map<String, Integer> cfSolved = ojData.getSolvedSet();
             for(String prob : super.cf){
-                if(set.get(prob) != null){
-                    c++;
+                if(cfSolved.get(prob) != null){
+                    set.put((String)prob, cfSolved.get(prob));
                 }
             }
         }else if(ojName == "uva"){
-            Map<String, Integer> set = ojData.getUnsolvedSet();
+            Map<String, Integer> uvaSolved = ojData.getSolvedSet();
             for(String prob : super.uva){
-                if(set.get(prob) != null){
-                    c++;
+                if(uvaSolved.get(prob) != null){
+                    set.put((String)prob, uvaSolved.get(prob));
                 }
             }
         }
-        return c;
+        return set;
+    }
+
+    public Map<String, Integer> getUnsolved(OjData ojData, String ojName){
+        Map<String, Integer> set= new HashMap<>();
+        if(ojName=="cf"){
+            Map<String, Integer> cfUnsolved = ojData.getUnsolvedSet();
+            for(String prob : super.cf){
+                if(cfUnsolved.get(prob) != null){
+                    set.put((String)prob, cfUnsolved.get(prob));
+                }
+            }
+        }else if(ojName == "uva"){
+            Map<String, Integer> uvaUnsolved = ojData.getUnsolvedSet();
+            for(String prob : super.uva){
+                if(uvaUnsolved.get(prob) != null){
+                    set.put((String)prob, uvaUnsolved.get(prob));
+                }
+            }
+        }
+        return set;
     }
 
     public int dailySolved(OjData ojData, String ojName){

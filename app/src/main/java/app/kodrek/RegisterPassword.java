@@ -7,9 +7,12 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ public class RegisterPassword extends AppCompatActivity {
     TextView textView_passwordLabel;
     TextView textView_confirmPasswordLabel;
     Button button_register;
+    Boolean hidden1, hidden2;
+    ImageView imageView_eye1, imageView_eye2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,11 @@ public class RegisterPassword extends AppCompatActivity {
         textView_passwordLabel = findViewById(R.id.passwordLabel);
         textView_confirmPasswordLabel = findViewById(R.id.confirmPasswordLabel);
         button_register = findViewById(R.id.register);
+
+        imageView_eye1 = findViewById(R.id.eye1);
+        imageView_eye2 = findViewById(R.id.eye2);
+
+        hidden1 = hidden2 = true;
     }
 
     public void registerUser(View v){
@@ -88,5 +98,29 @@ public class RegisterPassword extends AppCompatActivity {
         i.putExtra("codeforces", getIntent().getStringExtra("codeforces"));
         i.putExtra("codeforces", getIntent().getStringExtra("uva"));
         startActivity(i);
+    }
+
+    public void changeInputType1(View v){
+        if(hidden1){
+            editText_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            imageView_eye1.setImageResource(R.drawable.eye);
+            hidden1=false;
+        }else{
+            editText_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            imageView_eye1.setImageResource(R.drawable.eyev);
+            hidden1=true;
+        }
+    }
+
+    public void changeInputType2(View v){
+        if(hidden2){
+            editText_confirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            imageView_eye2.setImageResource(R.drawable.eye);
+            hidden2=false;
+        }else{
+            editText_confirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            imageView_eye2.setImageResource(R.drawable.eyev);
+            hidden2=true;
+        }
     }
 }

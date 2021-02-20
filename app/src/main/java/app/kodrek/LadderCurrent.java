@@ -8,17 +8,24 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +54,10 @@ public class LadderCurrent extends AppCompatActivity {
 
     ImageView imageView_actionBtn;
 
+    SharedPreferences prefs;
+
+    int tgl = 0;
+
     int presetId;
 
     @Override
@@ -69,7 +80,7 @@ public class LadderCurrent extends AppCompatActivity {
 
         imageView_actionBtn = findViewById(R.id.actionButton);
 
-        SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
+        prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = getIntent().getStringExtra("presetList");
         presetList = gson.fromJson(json, PresetList.class);
@@ -169,6 +180,9 @@ public class LadderCurrent extends AppCompatActivity {
         ProgressBar progressBar_progressTries = findViewById(R.id.progressTries);
         progressBar_progressTries.setMax((solved + unsolved));
         progressBar_progressTries.setProgress(solved);
+
+        makeUnsolvedTable();
+        makeAllTable();
     }
 
     public void gotoDash(View v){
@@ -245,6 +259,171 @@ public class LadderCurrent extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Preset> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void seeLadderOverall(View v){
+        Intent i = new Intent(this, SubmissionsTable.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        i.putExtra("timeline", "ladderOverall");
+        startActivity(i);
+    }
+
+    public void seeLadderSolved(View v){
+        Intent i = new Intent(this, SubmissionsTable.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        i.putExtra("timeline", "ladderSolved");
+        startActivity(i);
+    }
+
+    private void makeUnsolvedTable(){
+        List<String> probs = userPreset.getCf();
+        probs.addAll(userPreset.getUva());
+        Collections.shuffle(probs);
+        TableLayout tableLayout_tableUnsolved = findViewById(R.id.tableUnsolved);
+        int i = 0;
+        for(String prob : probs){
+            if(codeforce.getSolvedSet().get(prob) != null || uva.getSolvedSet().get(prob) != null){
+                continue;
+            }
+            String probId = "";
+            if(userPreset.getUva().contains(prob)){
+                probId = "UVA-"+prob;
+            }else{
+                probId = "CF-"+prob;
+            }
+            TableRow tableRow = new TableRow(this);
+            tableRow.setWeightSum(3);
+            if(i%2==0){
+                tableRow.setBackgroundColor(getResources().getColor(R.color.base));
+            }else{
+                tableRow.setBackgroundColor(getResources().getColor(R.color.box));
+            }
+            tableRow.setPadding(18, 6, 18, 6);
+            TextView textView_probId  = new TextView(this);
+            textView_probId.setText(probId);
+            textView_probId.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            textView_probId.setTextColor(getResources().getColor(R.color.white));
+            textView_probId.setLayoutParams(new TableRow.LayoutParams(5, ViewGroup.LayoutParams.MATCH_PARENT, 2f));
+            tableRow.addView(textView_probId);
+            TextView textView_Status = new TextView(this);
+            if(codeforce.getUnsolvedSet().get(prob) != null || uva.getUnsolvedSet().get(prob) != null){
+                textView_Status.setText("Tried");
+                textView_Status.setTextColor(getResources().getColor(R.color.danger));
+            }else{
+                textView_Status.setText("Unsolved");
+                textView_Status.setTextColor(getResources().getColor(R.color.warning));
+            }
+            textView_Status.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            textView_Status.setLayoutParams(new TableRow.LayoutParams(5, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+            tableRow.addView(textView_Status);
+            tableLayout_tableUnsolved.addView(tableRow);
+            i++;
+        }
+//        Toast.makeText(this, probs.size()+"", Toast.LENGTH_LONG).show();
+    }
+
+    private void makeAllTable(){
+        List<String> probs = userPreset.getCf();
+        probs.addAll(userPreset.getUva());
+        Collections.shuffle(probs);
+        TableLayout tableLayout_tableAll = findViewById(R.id.tableAll);
+        int i = 0;
+        for(String prob : probs){
+            String probId = "";
+            if(userPreset.getUva().contains(prob)){
+                probId = "UVA-"+prob;
+            }else{
+                probId = "CF-"+prob;
+            }
+            TableRow tableRow = new TableRow(this);
+            tableRow.setWeightSum(3);
+            if(i%2==0){
+                tableRow.setBackgroundColor(getResources().getColor(R.color.base));
+            }else{
+                tableRow.setBackgroundColor(getResources().getColor(R.color.box));
+            }
+            tableRow.setPadding(18, 6, 18, 6);
+            TextView textView_probId  = new TextView(this);
+            textView_probId.setText(probId);
+            textView_probId.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            textView_probId.setTextColor(getResources().getColor(R.color.white));
+            textView_probId.setLayoutParams(new TableRow.LayoutParams(5, ViewGroup.LayoutParams.MATCH_PARENT, 2f));
+            tableRow.addView(textView_probId);
+            TextView textView_Status = new TextView(this);
+            if(codeforce.getSolvedSet().get(prob) != null || uva.getSolvedSet().get(prob) != null){
+                textView_Status.setText("Solved");
+                textView_Status.setTextColor(getResources().getColor(R.color.success));
+            }else if(codeforce.getUnsolvedSet().get(prob) != null || uva.getUnsolvedSet().get(prob) != null){
+                textView_Status.setText("Tried");
+                textView_Status.setTextColor(getResources().getColor(R.color.danger));
+            }else{
+                textView_Status.setText("Unsolved");
+                textView_Status.setTextColor(getResources().getColor(R.color.warning));
+            }
+            textView_Status.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            textView_Status.setLayoutParams(new TableRow.LayoutParams(5, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+            tableRow.addView(textView_Status);
+            tableLayout_tableAll.addView(tableRow);
+            i++;
+        }
+//        Toast.makeText(this, probs.size()+"", Toast.LENGTH_LONG).show();
+    }
+
+    public void toggleSolvedUnsolved(View v){
+        if(tgl ==0){
+            tgl = 1;
+            TextView textView_slvUnslv = findViewById(R.id.slvUnslv);
+            textView_slvUnslv.setText("All");
+            TableLayout tableLayout = findViewById(R.id.tableUnsolved);
+            tableLayout.setVisibility(View.GONE);
+            tableLayout = findViewById(R.id.tableAll);
+            tableLayout.setVisibility(View.VISIBLE);
+        }else{
+            tgl = 0;
+            TextView textView_slvUnslv = findViewById(R.id.slvUnslv);
+            textView_slvUnslv.setText("Unsolved");
+            TableLayout tableLayout = findViewById(R.id.tableAll);
+            tableLayout.setVisibility(View.GONE);
+            tableLayout = findViewById(R.id.tableUnsolved);
+            tableLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void likePreset(View v){
+        String json = prefs.getString("userPreset", "");
+        if(json == ""){
+            return;
+        }
+        ImageView imageView_actionButton = findViewById(R.id.actionButton);
+        Call<CheckingResponse> likePreset = ApiClient.getUserService().likePreset("Bearer "+loginResponse.getToken());
+        likePreset.enqueue(new Callback<CheckingResponse>() {
+            @Override
+            public void onResponse(Call<CheckingResponse> call, Response<CheckingResponse> response) {
+                if(response.isSuccessful()){
+                    if(userPreset.getLike()==1){
+                        userPreset.setLike(0);
+                        imageView_actionButton.setImageResource(R.drawable.heartl);
+                    }else{
+                        userPreset.setLike(1);
+                        imageView_actionButton.setImageResource(R.drawable.hearts);
+                    }
+                }
+                SharedPreferences.Editor prefsEditor = getSharedPreferences("K0DR3K", MODE_PRIVATE).edit();
+                Gson gson = new Gson();
+                String jsonT = gson.toJson(userPreset);
+                prefsEditor.putString("userPreset", jsonT);
+                prefsEditor.commit();
+            }
+
+            @Override
+            public void onFailure(Call<CheckingResponse> call, Throwable t) {
 
             }
         });

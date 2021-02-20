@@ -148,7 +148,17 @@ public class DashToday extends AppCompatActivity {
         Intent i = new Intent(this, SubmissionsTable.class);
         i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
         i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
         i.putExtra("timeline", "today");
+        startActivity(i);
+    }
+
+    public void seeLadderTries(View v){
+        Intent i = new Intent(this, SubmissionsTable.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        i.putExtra("timeline", "ladderToday");
         startActivity(i);
     }
 

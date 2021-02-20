@@ -20,6 +20,18 @@ title __KODREK's Class Diagram__\n
   
 
   namespace app.kodrek {
+    class app.kodrek.ComingSoon {
+        + comingSoon()
+        + gotoLadder()
+        + gotoMenu()
+        + gotoToday()
+        + refresh()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
     class app.kodrek.DashOverall {
         ~ constraintLayout_ladderBox : ConstraintLayout
         ~ prefs : SharedPreferences
@@ -27,7 +39,9 @@ title __KODREK's Class Diagram__\n
         ~ textView_totalAc : TextView
         ~ textView_totalSub : TextView
         ~ textView_username : TextView
+        + comingSoon()
         + gotoLadder()
+        + gotoMenu()
         + gotoPresets()
         + gotoToday()
         + refresh()
@@ -40,13 +54,19 @@ title __KODREK's Class Diagram__\n
 
   namespace app.kodrek {
     class app.kodrek.DashToday {
+        ~ constraintLayout_ladderBox : ConstraintLayout
+        ~ prefs : SharedPreferences
         ~ progressBar_goalBar : ProgressBar
         ~ textView_dailyGoal : TextView
         ~ textView_totalAc : TextView
         ~ textView_totalTr : TextView
         ~ textView_username : TextView
+        + comingSoon()
         + gotoLadder()
+        + gotoMenu()
         + gotoOverall()
+        + gotoPresets()
+        + onBackPressed()
         + refresh()
         + seeTried()
         # onCreate()
@@ -86,9 +106,11 @@ title __KODREK's Class Diagram__\n
         ~ textView_solvedCount : TextView
         ~ textView_totalCount : TextView
         + activePreset()
+        + comingSoon()
         + gotoDash()
         + gotoLadderCurrent()
         + gotoLadderPreset()
+        + gotoMenu()
         + refresh()
         # onCreate()
         - updateById()
@@ -102,8 +124,10 @@ title __KODREK's Class Diagram__\n
         ~ jsonT : String
         ~ presetBox : LinearLayout
         ~ presetHolder : LinearLayout
+        + comingSoon()
         + gotoDash()
         + gotoLadderCurrent()
+        + gotoMenu()
         + presetDetails()
         # onCreate()
         - makeList()
@@ -192,6 +216,17 @@ title __KODREK's Class Diagram__\n
   
 
   namespace app.kodrek {
+    class app.kodrek.Menu {
+        + comingSoon()
+        + gotoLadder()
+        + gotoToday()
+        + power()
+        # onCreate()
+    }
+  }
+  
+
+  namespace app.kodrek {
     class app.kodrek.OjData {
         - disAc : int
         - solvedSet : Map<String, Integer>
@@ -228,6 +263,7 @@ title __KODREK's Class Diagram__\n
         ~ presetId : int
         + countSolved()
         + countUnsolved()
+        + dailySolved()
         + getCheckpoint()
         + getDays()
         + getLike()
@@ -450,6 +486,7 @@ title __KODREK's Class Diagram__\n
   }
   
 
+  app.kodrek.ComingSoon -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.DashOverall -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.DashOverall o-- app.kodrek.OjData : codeforce
   app.kodrek.DashOverall o-- app.kodrek.LoginResponse : loginResponse
@@ -458,6 +495,7 @@ title __KODREK's Class Diagram__\n
   app.kodrek.DashToday -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.DashToday o-- app.kodrek.OjData : codeforce
   app.kodrek.DashToday o-- app.kodrek.LoginResponse : loginResponse
+  app.kodrek.DashToday o-- app.kodrek.Preset : userPreset
   app.kodrek.DashToday o-- app.kodrek.OjData : uva
   app.kodrek.FetchData -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.FetchData o-- app.kodrek.OjData : codeforce
@@ -478,6 +516,7 @@ title __KODREK's Class Diagram__\n
   app.kodrek.LoginPassword -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.LoginSignupOption -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  app.kodrek.Menu -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.Preset -up-|> app.kodrek.ProblemSet
   app.kodrek.RegisterCf -up-|> androidx.appcompat.app.AppCompatActivity
   app.kodrek.RegisterComplete -up-|> androidx.appcompat.app.AppCompatActivity

@@ -37,6 +37,7 @@
                     android:id="@+id/imageView6"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="gotoDash"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
                     android:id="@+id/imageView7"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="gotoLadderCurrent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +74,7 @@
                     android:id="@+id/imageView10"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:onClick="refresh"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +92,7 @@
                     android:id="@+id/imageView8"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="comingSoon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +109,7 @@
                     android:id="@+id/imageView9"
                     android:layout_width="31dp"
                     android:layout_height="31dp"
+                    android:onClick="gotoMenu"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +129,8 @@
         android:text="Problems Tried"
         android:textColor="@color/white"
         android:textSize="28sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -139,7 +144,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerText" />
+        app:layout_constraintTop_toBottomOf="@+id/ladderName" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -266,5 +271,20 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/ladderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

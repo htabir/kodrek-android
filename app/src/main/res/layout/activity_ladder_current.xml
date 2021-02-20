@@ -176,6 +176,7 @@
             android:id="@+id/actionButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:onClick="likePreset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/presetName"
@@ -373,6 +374,7 @@
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/warning"
                     android:fontFamily="@font/baloo_medium"
+                    android:onClick="seeLadderSolved"
                     android:text="See All"
                     android:textColor="@color/white"
                     app:cornerRadius="18dp"
@@ -505,6 +507,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/baloo_medium"
+                    android:onClick="seeLadderOverall"
                     android:text="See All"
                     android:textColor="@color/white"
                     app:cornerRadius="18dp" />
@@ -530,22 +533,79 @@
                     android:orientation="horizontal"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:weightSum="1">
+                    android:weightSum="5">
 
                     <TextView
                         android:id="@+id/textView26"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.75"
+                        android:layout_weight="4"
                         android:fontFamily="@font/baloo_medium"
                         android:text="Problem Set"
+                        android:textColor="@color/fonty" />
+
+                    <TextView
+                        android:id="@+id/slvUnslv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/baloo_medium"
+                        android:onClick="toggleSolvedUnsolved"
+                        android:text="Unsolved"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/fonty" />
 
                 </LinearLayout>
 
                 <TableLayout
+                    android:id="@+id/tableUnsolved"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7"
+                        android:background="@drawable/card_row"
+                        android:backgroundTint="@color/primary">
+
+                        <TextView
+                            android:id="@+id/textView39"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:fontFamily="@font/baloo_bold"
+                            android:text="Problem ID"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/baloo_bold"
+                            android:text="Status"
+                            android:textAlignment="viewEnd"
+                            android:textColor="@color/white" />
+                    </TableRow>
+
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/tableMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/baloo_regular"
+                    android:text="You Have Solved All Problems"
+                    android:textAlignment="center"
+                    android:textColor="@color/fonty"
+                    android:visibility="gone" />
+
+                <TableLayout
+                    android:id="@+id/tableAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -569,73 +629,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/baloo_bold"
-                            android:text="Last Submission"
+                            android:text="Status"
                             android:textAlignment="viewEnd"
                             android:textColor="@color/white" />
                     </TableRow>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"
-                        android:background="@drawable/card_row"
-                        android:backgroundTint="@color/base">
-
-                        <TextView
-                            android:id="@+id/textView31"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/baloo_medium"
-                            android:text="CF 677A"
-                            android:textColor="@color/fonty" />
-
-                        <TextView
-                            android:id="@+id/textView32"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/baloo_medium"
-                            android:text="57m ago"
-                            android:textAlignment="viewEnd"
-                            android:textColor="@color/fonty" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"
-                        android:background="@drawable/card_row">
-
-                        <TextView
-                            android:id="@+id/textView18"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:fontFamily="@font/baloo_medium"
-                            android:text="CF 125A"
-                            android:textColor="@color/fonty" />
-
-                        <TextView
-                            android:id="@+id/textView22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/baloo_medium"
-                            android:text="8h ago"
-                            android:textAlignment="viewEnd"
-                            android:textColor="@color/fonty" />
-                    </TableRow>
-
                 </TableLayout>
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/baloo_regular"
-                    android:text="Total 8 in the list"
-                    android:textAlignment="center"
-                    android:textColor="@color/fonty" />
 
             </LinearLayout>
 

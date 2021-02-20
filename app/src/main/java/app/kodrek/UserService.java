@@ -45,4 +45,16 @@ public interface UserService {
 
     @POST("preset/stats/{id}")
     Call<Preset> getPresetStats(@Path("id") String username, @Header("Authorization") String Token);
+
+    @POST("preset/like")
+    Call<CheckingResponse> likePreset(@Header("Authorization") String Token);
+
+    @POST("auth/logout")
+    Call<CheckingResponse> logout(@Header("Authorization") String Token);
+
+    @POST("auth/change/dailyGoal/{goal}")
+    Call<CheckingResponse> changeDailyGoal(@Path("goal") int goal, @Header("Authorization") String Token);
+
+    @POST("auth/change/presetDailyGoal/{goal}")
+    Call<CheckingResponse> changePresetGoal(@Path("goal") int goal, @Header("Authorization") String Token);
 }

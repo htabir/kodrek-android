@@ -1,10 +1,10 @@
 package app.kodrek;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.os.Build;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,8 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SubmissionsTable extends AppCompatActivity {
 
@@ -37,6 +34,7 @@ public class SubmissionsTable extends AppCompatActivity {
 
     OjData codeforce = new OjData();
     OjData uva = new OjData();
+    Preset userPreset;
     Map<String, Integer> subs;
     String timeline;
 
@@ -64,15 +62,35 @@ public class SubmissionsTable extends AppCompatActivity {
         uva = gson.fromJson(json, OjData.class);
         timeline = getIntent().getStringExtra("timeline");
 
-        mergeData();
+        SharedPreferences prefs = getSharedPreferences("K0DR3K", MODE_PRIVATE);
+        json = prefs.getString("userPreset", "");
+        if(json!=""){
+            userPreset = gson.fromJson(json, Preset.class);
+        }
+
+        if(timeline.equals("ladderToday") || timeline.equals("ladderOverall") || timeline.equals("ladderSolved")){
+            mergeLadderData();
+        }else{
+            mergeDashData();
+        }
         update();
     }
 
     private void update(){
-        if(timeline=="today"){
-            textView_header.setText("Problem Tried");
+
+        if(timeline.equals("today")){
             textView_timeline.setText("Today");
-        }else if(timeline=="overall"){
+        }else if(timeline.equals("overall")){
+            textView_timeline.setText("Overall");
+        }else if(timeline.equals("ladderToday")){
+            TextView textView_ladderName = findViewById(R.id.ladderName);
+            textView_ladderName.setText(userPreset.getName());
+            textView_ladderName.setVisibility(View.VISIBLE);
+            textView_timeline.setText("Today");
+        }else if(timeline.equals("ladderOverall")){
+            TextView textView_ladderName = findViewById(R.id.ladderName);
+            textView_ladderName.setText(userPreset.getName());
+            textView_ladderName.setVisibility(View.VISIBLE);
             textView_timeline.setText("Overall");
         }
         initTable();
@@ -83,9 +101,14 @@ public class SubmissionsTable extends AppCompatActivity {
 
     private void initTable(){
         if(f!=-1){
-            for(int i=f; i<(f+20); i++, c++){
+            int limit = ((subs.size() / 20) >= 1)? 20 : (subs.size()%20);
+            for(int i=f; i<limit; i++, c++){
+                if(c==subs.size()){
+                    f=-1;
+                    break;
+                }
                 Map.Entry<String, Integer> data= subs.entrySet().iterator().next();
-                if(timeline.equals("today")){
+                if(timeline.equals("today") || timeline.equals("ladderToday")){
                     if(data.getValue() < time - (time % 86400)){
                         f = -1;
                         break;
@@ -156,17 +179,33 @@ public class SubmissionsTable extends AppCompatActivity {
 
             }
         }
+        if(subs.size()==0){
+            f=-1;
+        }
         if(f==-1){
             button_load.setVisibility(View.GONE);
         }
+
     }
 
-    private void mergeData(){
+    private void mergeDashData(){
         subs = new HashMap<>();
         subs.putAll(codeforce.getSolvedSet());
         subs.putAll(codeforce.getUnsolvedSet());
         subs.putAll(uva.getSolvedSet());
         subs.putAll(uva.getUnsolvedSet());
+
+        subs = sortByValue((HashMap<String, Integer>) subs);
+    }
+
+    private void mergeLadderData(){
+        subs = new HashMap<>();
+        subs.putAll(userPreset.getSolved(codeforce, "cf"));
+        subs.putAll(userPreset.getSolved(uva, "uva"));
+        if(!timeline.equals("ladderSolved")){
+            subs.putAll(userPreset.getUnsolved(codeforce, "cf"));
+            subs.putAll(userPreset.getUnsolved(uva, "uva"));
+        }
 
         subs = sortByValue((HashMap<String, Integer>) subs);
     }
@@ -196,6 +235,48 @@ public class SubmissionsTable extends AppCompatActivity {
 
     public void loadMore(View v){
         initTable();
+    }
+
+    public void gotoDash(View v){
+        Intent i = new Intent(this, DashToday.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void refresh(View v){
+        if(timeline.equals("today") || timeline.equals("overall")){
+            Intent i = new Intent(this, FetchData.class).putExtra("activity", "app.kodrek.DashToday");
+            startActivity(i);
+        }else{
+            Intent i = new Intent(this, FetchData.class).putExtra("activity", "app.kodrek.LadderCurrent");
+            startActivity(i);
+        }
+    }
+
+    public void gotoLadderCurrent(View v){
+        Intent i = new Intent(this, LadderCurrent.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void gotoMenu(View v){
+        Intent i = new Intent(this, Menu.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
+    }
+
+    public void comingSoon(View v){
+        Intent i = new Intent(this, ComingSoon.class);
+        i.putExtra("codeforce", getIntent().getStringExtra("codeforce"));
+        i.putExtra("uva", getIntent().getStringExtra("uva"));
+        i.putExtra("presetList", getIntent().getStringExtra("presetList"));
+        startActivity(i);
     }
 
 }
